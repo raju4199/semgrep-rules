@@ -1,0 +1,33 @@
+rules:
+- id: spring-ldap-anonymous-read-only-properties
+  message: >-
+    spring.ldap.anonymous-read-only is enabled, so read operations are done
+    without authenticating to the LDAP server. Anyone who can reach the
+    application can then read whatever the anonymous LDAP user can see. Set
+    spring.ldap.username and spring.ldap.password instead.
+  severity: WARNING
+  languages: [generic]
+  paths:
+    include:
+    - '*properties'
+  metadata:
+    cwe:
+    - 'CWE-1390: Weak Authentication'
+    owasp:
+    - A07:2021 - Identification and Authentication Failures
+    - A07:2025 - Authentication Failures
+    references:
+    - https://docs.spring.io/spring-boot/appendix/application-properties/index.html#application-properties.data.spring.ldap.anonymous-read-only
+    - https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures
+    category: security
+    technology:
+    - spring
+    - ldap
+    subcategory:
+    - audit
+    likelihood: LOW
+    impact: MEDIUM
+    confidence: MEDIUM
+  # Spring's relaxed binding also accepts the camelCase key, and properties
+  # files allow either '=' or ':' as the separator.
+  pattern-regex: (?m)^\s*spring\.ldap\.anonymous(-read-only|ReadOnly)\s*[=:]\s*true\s*$
