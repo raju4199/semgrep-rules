@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: directory-service
+  ldap:
+    urls: ldap://ldap.example.com:389
+    base: dc=example,dc=com
+    # ruleid: spring-ldap-anonymous-read-only-yaml
+    anonymous-read-only: true
+---
+spring:
+  ldap:
+    urls: ldap://ldap.example.com:389
+    # ruleid: spring-ldap-anonymous-read-only-yaml
+    anonymousReadOnly: true
+---
+spring:
+  ldap:
+    urls: ldap://ldap.example.com:389
+    username: cn=app,dc=example,dc=com
+    # ok: spring-ldap-anonymous-read-only-yaml
+    anonymous-read-only: false
+---
+other:
+  ldap:
+    # ok: spring-ldap-anonymous-read-only-yaml
+    anonymous-read-only: true
