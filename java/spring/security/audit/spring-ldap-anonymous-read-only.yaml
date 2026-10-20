@@ -1,0 +1,30 @@
+rules:
+- id: spring-ldap-anonymous-read-only
+  message: >-
+    This LDAP context source is set to anonymous read-only, so read operations
+    are done without authenticating to the directory server. Anyone who can
+    reach the application can then read whatever the anonymous LDAP user can
+    see. Configure a userDn and password on the context source instead.
+  severity: WARNING
+  languages: [java]
+  metadata:
+    cwe:
+    - 'CWE-1390: Weak Authentication'
+    owasp:
+    - A07:2021 - Identification and Authentication Failures
+    - A07:2025 - Authentication Failures
+    references:
+    - https://docs.spring.io/spring-ldap/reference/api/java/org/springframework/ldap/core/support/AbstractContextSource.html#setAnonymousReadOnly(boolean)
+    - https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures
+    category: security
+    technology:
+    - spring
+    - ldap
+    subcategory:
+    - audit
+    likelihood: LOW
+    impact: MEDIUM
+    confidence: MEDIUM
+  # setAnonymousReadOnly() is defined on AbstractContextSource, so this covers
+  # LdapContextSource, DefaultSpringSecurityContextSource and subclasses.
+  pattern: $SOURCE.setAnonymousReadOnly(true)
